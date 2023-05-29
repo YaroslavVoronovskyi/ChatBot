@@ -1,6 +1,8 @@
 package com.gmail.voronovskyi.yaroslav.chatbot.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +14,8 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@Builder
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
