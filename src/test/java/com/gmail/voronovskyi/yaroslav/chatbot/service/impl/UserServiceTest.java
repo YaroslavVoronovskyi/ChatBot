@@ -8,15 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 public class UserServiceTest {
 
     private final static long CHAT_ID = 1L;
@@ -39,6 +36,28 @@ public class UserServiceTest {
         assertEquals(userService.findAllUsers(), List.of(createTestUser()));
     }
 
+    @Test
+    public void shouldReturnExpectedNewUsers() {
+        Mockito.when(userRepository.findNewUsers()).thenReturn(List.of(createTestNewUser()));
+        assertEquals(userService.findNewUsers(), List.of(createTestNewUser()));
+    }
+
+    @Test
+    public void shouldAddNewUser() {
+        User user = createTestNewUser();
+        user.setAdmin(false);
+        userService.addUser(user);
+        Mockito.verify(userRepository).save(user);
+    }
+
+    @Test
+    public void shouldUpdateUser() {
+        User user = createTestNewUser();
+        user.setAdmin(false);
+        userService.updateUser(user);
+        Mockito.verify(userRepository).save(user);
+    }
+
     private User createTestUser() {
         return User.builder()
                 .id(1L)
@@ -47,6 +66,17 @@ public class UserServiceTest {
                 .email("yaroslav.voronovskyi@gmail.com")
                 .admin(true)
                 .notified(false)
+                .build();
+    }
+
+    private User createTestNewUser() {
+        return User.builder()
+                .id(1L)
+                .chatId(CHAT_ID)
+                .phone("+380976714492")
+                .email("yaroslav.voronovskyi@gmail.com")
+                .admin(true)
+                .notified(true)
                 .build();
     }
 }
