@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@PropertySource("classpath:telegram.property")
+@PropertySource("telegram.properties")
 public class NotificationService {
 
     private final IUserService userService;
